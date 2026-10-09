@@ -1,4 +1,6 @@
-.PHONY: all configure build test clean release
+.PHONY: all configure build test test-verbose test-direct clean release
+
+MAKEFLAGS += --no-print-directory
 
 BUILD_DIR := build
 
@@ -14,7 +16,16 @@ build: configure
 	cmake --build $(BUILD_DIR) --parallel
 
 test: build
-	ctest --test-dir $(BUILD_DIR) --output-on-failure
+	ctest --test-dir $(BUILD_DIR) --output-on-failure -Q
+
+test-verbose: build
+	ctest --test-dir $(BUILD_DIR) --output-on-failure -V
+
+test-progress: build
+	ctest --test-dir $(BUILD_DIR) --output-on-failure --progress
+
+test-direct: build
+	GTEST_COLOR=yes ./$(BUILD_DIR)/tests/mip_tests
 
 release:
 	cmake -S . -B $(BUILD_DIR)-release \

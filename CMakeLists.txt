@@ -25,6 +25,11 @@ option(MIP_ENABLE_CUDA
     OFF
 )
 
+option(MIP_BUILD_BENCHMARKS
+    "Build mip benchmark programs"
+    ON
+)
+
 # --------------------------------------------------
 # C++ standard
 # --------------------------------------------------
@@ -80,6 +85,7 @@ else()
         -Wpedantic
         -Wconversion
         -Wshadow
+        -Wno-unused-result
     )
 endif()
 
@@ -109,10 +115,18 @@ if(MIP_BUILD_EXAMPLES)
 endif()
 
 # --------------------------------------------------
+# Benchmarks
+# --------------------------------------------------
+
+if(MIP_BUILD_BENCHMARKS)
+    add_subdirectory(benchmarks)
+endif()
+
+# --------------------------------------------------
 # Tests
 # --------------------------------------------------
 
-# if(MIP_BUILD_TESTS)
-#     enable_testing()
-#     add_subdirectory(tests)
-# endif()
+if(MIP_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()

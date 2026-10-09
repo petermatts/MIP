@@ -131,12 +131,12 @@ std::size_t Image<PixelT>::row_stride() const noexcept {
 
 template <typename PixelT>
 PixelT* Image<PixelT>::data() noexcept {
-    return data_.data();
+    return data_.empty() ? nullptr : data_.data();
 }
 
 template <typename PixelT>
 const PixelT* Image<PixelT>::data() const noexcept {
-    return data_.data();
+    return data_.empty() ? nullptr : data_.data();
 }
 
 template <typename PixelT>

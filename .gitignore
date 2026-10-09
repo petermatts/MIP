@@ -1,3 +1,7 @@
+# C++/Cmake
+build
+
+# CUDA
 *.i
 *.ii
 *.gpu
